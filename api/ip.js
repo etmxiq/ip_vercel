@@ -1,5 +1,15 @@
 export default function handler(req, res) {
-  // Vercel 获取真实 IP 的头部
+  // 设置 CORS 头，允许任何网站访问
+  res.setHeader("Access-Control-Allow-Origin", "https://mvp.us.kg");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  // 处理预检请求
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
+  // 获取真实 IP
   const ip =
     req.headers["x-real-ip"] ||
     req.headers["x-forwarded-for"]?.split(",")[0] ||
